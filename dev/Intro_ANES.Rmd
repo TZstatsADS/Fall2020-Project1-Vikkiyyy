@@ -1,9 +1,9 @@
 ---
 title: "What Drives Hispanic Voting Enthusiasm in the Year of 2000 - 2016"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 [For the 2020 election](https://www.businessinsider.com/bidens-election-chances-with-hispanic-voters-in-texas-florida-arizona-2020-9), Latios' civic engagement is especially important. It is the first time that Latinos are projected to be the largest racial minority in a US presidential election, with a record of 32 million eligible to vote, accounting for 13.3% of the total eligible voters. They constitute a big part of the voting population in the swing states, with 30% in Texas, 24% in Arizona, and 20% in Florida. Those swing states are crucial for President Trump to win to secure the White House. Also, Latino voters tend to cast their ballots early and by mail in 2018, which are two keys methods for voting this year due to the pandemic that is going on.
 
@@ -203,7 +203,7 @@ ggplot(anes_Hispanic_origin_trend, aes(year,n,fill=vote)) +
 
 ```
 
-Among all groups, they all have increasing participation till 2012 and decrease in 2016. Comparatively,  Mexican-American is the most active voters over the years, and they constitute approximately 60% of the Hispanic votes every year. Starting 2008, around 70%+ of Mexican-American and Puerto Rican voted for Democrats. However, only around 60 of other Hispanics voted for Democrats. 
+Among all groups, they all have increasing participation till 2012 and decrease in 2016. Comparatively,  Mexican-Americans are the most active voters over the years, and they constitute approximately 60% of the Hispanic voters every year. Starting 2008, around 70% + of Mexican-American and Puerto Rican voted for Democrats. 
 
 ### Q2: Who did Hispanics with different information news source vote for in the election
 After looking at birthplace, another cultural identity factor that comes into my mind is the language. In the context of voting behavior, I am interested in looking at if information news source language would affect the political party preference. The survey and answer scale shown below:
@@ -241,7 +241,7 @@ ggplot(anes_Hispanic_information_language_trend, aes(year,n,fill=vote)) +
 
 ```
 
-By looking at Figure 2.1, its seems like most Hispanic voters (total count = 885) look at English news source, with 70.4% of them supports Democrats. Even though there are fewer voters who watch bilingual and Spanish news sources, over 80%  voted for Democrats. Over the year, it seems like English new source audiences are around 10% less to supports Democrats, especially in the years 2012 and 2016. 
+By looking at Figure 2.1, its seems like most Hispanic voters (total count = 885) look at English news source, with 70.4% of them supports Democrats. Even though there are fewer voters who watch bilingual and Spanish news sources, over 80%  voted for Democrats. Over the year, it seems like English new source audiences are 10% proportionally less supporting Democrats, especially in the years 2012 and 2016. 
 
 ## Other Demographic Variables
 ### Q3. Who did Different Age Hispanics Vote for in the Election?
@@ -299,7 +299,7 @@ I further looked at the trend of different age group's voting choices over years
 
 ### Q4: Who did Different Education Group Hispanics vote for in the election? 
 
-After looking at the age, I find out that people who are born between 1942 - 1990 are more politically active, and younger people are more likely to support  Democrats(especially for those born after 1975). I am also curious to see if education plays a part. 
+After looking at the age, I find out that people who are born between 1942 - 1990 are more politically active, and younger people are more likely to support Democrats(especially for those born after 1975). I am also curious to see if education plays a part. 
 
 <img src="../figs/vcf0110.png" width="500" height="500">
 
@@ -341,10 +341,7 @@ ggplot(b, aes(x=year, y=prop,group=education)) +
   labs(title="Figure 4.2: How did Different Education Hispanics vote for in the election \n over the years? - Republican")
 ```
 
-From Figure 4.1, most of the participants are with high school degrees or above. I see an interesting turn in attitude for people who attend grade school or less. Before 2004, nearly none of them participated in the casting the ballot. However, starting 2008, up till 2012, there is an increasing amount of people voted, with 70%+ of them voted for Democrats.
-
-Proportional wise, as evidenced by Figure 4.2, the lines of some college and college or advanced degree is generally higher than the rest, Hispanics with more advanced degree tend to have larger proportion who support Republicans, even though the majority of them still support Democrats.
-
+From Figure 4.1, most of the participants are with high school degrees or above. I see an interesting turn in attitude for people who attend grade school or less. Before 2004, nearly none of them participated in the casting the ballot. However, starting 2008, up till 2012, there is an increasing amount of people voted, with 70%+ of them voted for Democrats. Proportional wise, as evidenced by Figure 4.2, over the years all groups are less likely to vote for Republicans. 
 
 ### Q5: Who did Different Hispanics with Different Income Level Vote for in the Election?
 Would it be possible that higher education is linked to higher income, and thus there is a differenec in voting behavior?
@@ -379,43 +376,17 @@ ggplot(a, aes(x=year, y=prop,group=income_group)) +
   ylim(0,1)+
   labs(title="Figure 5.2: Who did Hispanics with different income level vote for in the election \n over the years? - Proportion for Republicans")
 
-# Who did Hispanics with different income level vote for in the election over the years - count
-ggplot(anes_Hispanic_income_group, 
-       aes(x=income_group, y=n, fill=vote)) +
-  geom_bar(stat="identity", colour="white")+ 
-  scale_fill_manual(values=c("skyblue2", "lightcoral",  "lightgoldenrod1","ivory2"))+
-  theme(axis.text.x = element_text(angle = 90))+
-  labs(title="Figure 5.3: Who did Hispanics with different income level vote for \n in the election over the years")
-
 ggplot(anes_Hispanic_income_group_trend, aes(year,n,fill=vote)) +
   facet_wrap(~income_group, scales = 'free_x') +
   geom_bar(stat="identity", colour="white")+
   scale_fill_manual(values=c("skyblue2", "lightcoral",  "lightgoldenrod1","ivory2"))+
-  labs(title="Hispanics Political Party Preference By Income Level")+  
+  labs(title="Figure 5.3: Hispanics Political Party Preference By Income Level")+  
   theme(plot.margin = margin(0,0,0,0,"cm"),legend.text=element_text(size = 0.2),axis.text=element_text(size = 6),strip.text=element_text(size=7))
-
-# For Democrats
-a<-anes_Hispanic_income_group_trend%>%filter(vote=="1. Democrat")
-ggplot(a, aes(x=year, y=n,group=income_group)) +
-  geom_line(aes(color=income_group))+
-  ylim(0,180)+
-  labs(title="Figure 5.4: Who did Hispanics with different income level vote for in the election \n over the years? - Democrat")
-
-# For Republicans
-b<-anes_Hispanic_income_group_trend%>%filter(vote=="2. Republican")
-ggplot(b, aes(x=year, y=n,group=income_group)) +
-  geom_line(aes(color=income_group))+
-  ylim(0,180)+
-  labs(title="Figure 5.5: Who did Hispanics with different income level vote for in the election \n over the years? - Republican")
 ```
-Figure 5.1 indicates that, in general, as people with higher income, proportionally wise they tend to more favor Republicans in general, and this is persistent over time, as we can see from Figure 5.2, the line indicating high income would be higher in the graph. 
+In Figure 5.1 & 5.3, I see that people from different income groups are more supportive over Democrats, except from the highers income level. People who are in the middle class are particularly active. Comparatively, those who are at the 96 - 100 percent are less likely to vote.
 
-Another interesting thing is that in 2000, for people whose income is above 34 percent, most of them voted for Republicans, and afterward they voted more for Democrats. 
 
-From Figure 5.3, people who are in the middle class are particularly active. Comparatively, those who are at the 96 - 100 percent are less likely to vote.
-
-Figure 5.4 and 5.5 captures an interesting trend. For people who are on a lower(0-33) percentile, they tend to have similar voting behavior. For those who have higher wages (34-95), they tend to have similar voting behavior. What stands out is the voting behavior of 96 - 100 percentile, as follows a similar trend as those on the lower percentile.
-
+It also indicates that, in general, the proportion of Republican support rate incases as income leve increase, and this is persistent over time, as we can see from Figure 5.2, the line indicating high income would be higher in the graph. 
 
 
 #### Q5 Follow Up - Is the difference cased by Difference in Tax Attitudes?
@@ -454,17 +425,17 @@ ggplot(anes_Hispanic_tax_attitude_trend, aes(year,n,fill=vote)) +
   theme(plot.margin = margin(0,0,0,0,"cm"),legend.text=element_text(size = 0.2),axis.text=element_text(size = 6),strip.text=element_text(size=7))
 ```
 
-Comparatively, there are more voters think that the government spends on a lot of taxes. Compared to all groups, those who think government waste a lot of tax money tend to have a higher support rate for republicans compared to other groups, and this is more salient in the year of 2012.
+From Figure 6.1, comparatively, there are more voters (total 821) think that the government spends on a lot of taxes. Compared to all groups, those who think government waste a lot of tax money tend to have a higher support rate for republicans compared to other groups, and this is more salient in the year of 2012.
 
 ## Bottomline & Summary: 
 
 In this project, I provided a holistic analysis on how Hispanics’ voting enthusiasm has changed over time period of 2000 to 2016 and what drives their decisions. Based on the definition of Hispanic identity, I fist looked at how cultural identity (race-ethnicity & language) affects voting choices. One note when looking at my result is that as this study does not differentiate Latino and Hispanic, and it did not include enough diversity within the Hispanic group, so there might be misclassification error, as some people identified as Hispanic in some questions and identified as Non-Hispanic in others. In future studies, the study shouls include more factors for measuring culture identity. 
 
-When  looking at cultural identity (race-ethnicity & language), I found out that Hispanics from all groups are more likely to vote for Democrats, with Mexican - Americans are most active. For information language, audience from all news source favors Democrats more, with English Audience are less likely to choose Democrats proportionally compared to Spanish/Bilingual news audiences. 
+In general, Hispanics are increasing voting for Democratics. When  looking at cultural identity (race-ethnicity & language), I found out that Hispanics from all groups are more likely to vote for Democrats, with Mexican - Americans are most active. For information language, audience from all news source favors Democrats more, with English Audience are less likely to choose Democrats proportionally compared to Spanish/Bilingual news audiences. 
 
-When looking at other demographic factors(age, education, income (and tax attitude), etc) , Even though across all age, education, and income groups, they voted more for Democrats. When looking closely at proportions, comparatively across groups, younger and those with lower-income people are more likely to vote for Democrats, and those with higher income and higher education are of higher proportion to vote for Republicans. One reason of this could be their tax attitude, as those who think government waste a lot of tax money tend to have a higher support rate for republicans compared to other groups. 
+When looking at other demographic factors(age, education, income (and tax attitude), etc) , across all those factors, they voted more for Democrats. When looking closely at proportions, comparatively across groups, younger and those with lower-income people are more likely to vote for Democrats, and those with higher income are of higher proportion to vote for Republicans. I further plotted another interactive graph to look at the relationship among these factors. It seems like for those who are at the top income level (96 - 100 percentile), they are born between 1927 to 1943. For people who are born between 1911 to 1926, they tend to have a lower education level and lower-income. 
 
-I further plotted another interactive graph to look at the relationship among these factors. It seems like for those who are at the top income level (96 - 100 percentile), they are born between 1927 to 1943 and most of them have higher education levels. For people who are born between 1911 to 1926, they tend to have a lower education level and lower-income. 
+
 ```{r Interactive,include = FALSE}
 anes_Hispanic_origin = anes_Hispanic %>%
   group_by(year,education,income_group,year_of_birth)%>%
